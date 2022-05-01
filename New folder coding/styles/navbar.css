@@ -1,0 +1,25 @@
+#search_bar{
+      width:80%;
+      margin:10px auto;
+
+}
+#query{
+      width:100%;
+      height: 35px;
+      border: 1px solid teal;
+      border-radius: 20px;
+      padding: 5px;
+      font-size: medium;
+
+}
+#category{
+      display: flex;
+      justify-content: space-evenly;
+
+}
+#category h3{
+      border: 1px solid gray;
+      padding: 10px;
+      border-radius: 10px;
+
+}

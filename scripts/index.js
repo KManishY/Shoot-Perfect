@@ -1,79 +1,47 @@
-// https://api.unsplash.com/search/photos/?query=${value}&per_page=20&client_id=bvWgMt-UVBqrFgnna6j_PelRD6FJFQyszhacc4Nb3PA
-
-// https://api.unsplash.com/search/photos/?query=cat&per_page=20&client_id=bvWgMt-UVBqrFgnna6j_PelRD6FJFQyszhacc4Nb3PA
 let read = (ids) => {
-      return document.getElementById(ids);
-}
-const API = "bvWgMt-UVBqrFgnna6j_PelRD6FJFQyszhacc4Nb3PA";
+	return document.getElementById(ids);
+};
+
+const API = `htGZD7HBvzKu4QQc-arnVAdS0KKN_U8OYhfALmXAX50`;
 
 import { navbar } from "../components/navbar.js";
-let n = document.getElementById("navbar");
-n.innerHTML = navbar();
+read("navbar").innerHTML = navbar();
 
-import { searchImage, append } from "./fetch.js"
-
+import { getData, appendData } from "../components/fetch.js";
 const url1 = `https://api.unsplash.com/search/photos/?query=wallpapers&order_by=popular&orientation=portrait&per_page=100&client_id=${API}`;
-searchImage(url1).then((data) => {
-      append(data.results,container);
-})
+getData(url1).then((data) => {
+	appendData(data.results, container);
+});
+
 let search = (e) => {
-      if (e.key === "Enter") {
-            let value = document.getElementById("query").value;
-            searchImage(API, value).then((data) => {
-                  console.log(data)
-                  let container = document.getElementById("container");
-                  container.innerHTML = null;
-                  append(data.results, container);
-           })
-      }
-}
+	if (e.key == "Enter") {
+		let value = read("query").value;
+		const url = `https://api.unsplash.com/search/photos/?query=${value}&order_by=popular&orientation=portrait&per_page=100&client_id=${API}`;
+		getData(url).then((data) => {
+			console.log(data);
+			let container = read("container");
+			container.innerHTML = null;
+			appendData(data.results, container);
+		});
+	}
+};
 
-document.getElementById("query").innerHTML = addEventListener("keydown", search);
+read("query").innerHTML = addEventListener("keydown", search);
 
-let categories = document.getElementById("category").children;
-// console.log('categories: ', categories);
+let categories = read("category").children;
+// console.log("categories: ", categories);
 
-
-
-function cSearch(){
-      console.log(this.id);
-      const url = `https://api.unsplash.com/search/photos/?query=${this.id}&order_by=popular&orientation=portrait&per_page=60&client_id=${API}`;
-      searchImage(url).then((data) => {
-            console.log('data: ', data);
-            let container = read("container");
-            container.innerHTML = null;
-            append(data.results,container);
-
-      })
-      
-      
-      
-      // searchImage(API, value, this.id).then((data) => {
-      //       console.log(data);
-      //       let container = document.getElementById("container");
-      //       container.innerHTML = null;
-      //       append(data.results, container);
-      // });
-
+function categorySearch() {
+	console.log(this.id);
+	const url = `https://api.unsplash.com/search/photos/?query=${this.id}&order_by=popular&orientation=portrait&per_page=60&client_id=${API}`;
+	getData(url).then((data) => {
+		console.log(data);
+		let container = read("container");
+		container.innerHTML = null;
+		appendData(data.results, container);
+	});
 }
 
 for (let el of categories) {
-      el.addEventListener("click", cSearch);
+	el.addEventListener("click", categorySearch);
 }
-
-
-//---------------------------------------------------------------------------
-// let searchImage = async () => {
-//       let query = document.getElementById("query").value;
-//       try {
-//             let res = await fetch(
-//                   ` https://api.unsplash.com/search/photos/?query=${value}&per_page=20&client_id=${API}`
-//             );
-//             let data = await res.json();
-//             console.log('data: ', data);
-
-//       }
-//       catch (error) {
-//             console.log('error: ', error);
-//       }
-// };
